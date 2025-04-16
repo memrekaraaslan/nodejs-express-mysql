@@ -19,14 +19,3 @@ resources:
     memory: 64Mi
 
 
-mysql:
-  enabled: true
-  auth:
-    existingSecret: mysql-secret
-    username: dev_user
-    database: dev_db
-  primary:
-    persistence:
-      enabled: true
-      storageClass: gp2
-      size: 1Gi
