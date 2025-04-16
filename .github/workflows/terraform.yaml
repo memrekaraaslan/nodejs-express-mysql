@@ -13,13 +13,11 @@ on:
 
 jobs:
   terraform:
-    name: Terraform Format, Plan & Apply
+    name: Terraform Format, Plan, Apply and Show
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./terraform/k8s-setup
-    environment:
-      name: apply-review
 
     steps:
       - name: Checkout
@@ -64,6 +62,13 @@ jobs:
           -var="vpc_name=${{ secrets.VPC_NAME }}" \
           -var="cluster_name=${{ secrets.CLUSTER_NAME }}" \
           -var="environment=${{ secrets.ENVIRONMENT }}"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform Show
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: terraform show -no-color
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
