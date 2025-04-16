@@ -3,8 +3,8 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket         = "terraform-state-codeway"
-  force_destroy  = true
+  bucket        = "terraform-state-codeway"
+  force_destroy = true
 
   tags = {
     Name        = "Terraform State"

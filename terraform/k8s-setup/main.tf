@@ -13,9 +13,9 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-  enable_dns_hostnames      = true
-  enable_dns_support        = true
-  map_public_ip_on_launch   = true
+  enable_dns_hostnames    = true
+  enable_dns_support      = true
+  map_public_ip_on_launch = true
 
   tags = {
     Environment = var.environment
@@ -47,7 +47,7 @@ module "eks" {
           policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
 
           access_scope = {
-            type       = "cluster"
+            type = "cluster"
           }
         }
       }
