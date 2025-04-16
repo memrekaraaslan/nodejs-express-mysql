@@ -18,6 +18,8 @@ jobs:
     defaults:
       run:
         working-directory: ./terraform/k8s-setup
+    environment:
+      name: apply-review
 
     steps:
       - name: Checkout
@@ -57,7 +59,11 @@ jobs:
 
       - name: Terraform Apply
         if: (github.ref == 'refs/heads/master' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve \
+          -var="aws_region=${{ secrets.AWS_REGION }}" \
+          -var="vpc_name=${{ secrets.VPC_NAME }}" \
+          -var="cluster_name=${{ secrets.CLUSTER_NAME }}" \
+          -var="environment=${{ secrets.ENVIRONMENT }}"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
