@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: memrekaraaslan/nodejs-express-mysql
+  repository: 256606/nodejs-express-mysql
   tag: latest
   pullPolicy: IfNotPresent
 
