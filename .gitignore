@@ -1,2 +1,23 @@
-node_modules
+# Node.js
+node_modules/
+npm-debug.log
 package-lock.json
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+terraform.tfvars
+override.tf
+override.tf.json
+*.tfplan
+*.backup
+
+# VSCode
+.vscode/
+
+# System files
+.DS_Store
+
+allfileshas.txt
