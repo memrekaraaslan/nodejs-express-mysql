@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nodejs-express-mysql
+  name: nodejs-express-staging
   namespace: argocd
 spec:
   project: default
@@ -12,11 +12,11 @@ spec:
     path: helm/nodejs-express-mysql
     helm:
       valueFiles:
-        - values.yaml
+        - values-staging.yaml
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: staging
 
   syncPolicy:
     automated:

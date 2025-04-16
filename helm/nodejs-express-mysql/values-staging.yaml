@@ -1,0 +1,19 @@
+namespace: staging
+replicaCount: 1
+
+image:
+  repository: 256606/nodejs-express-mysql
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
