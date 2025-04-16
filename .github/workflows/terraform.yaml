@@ -3,11 +3,11 @@ name: Terraform CI/CD
 on:
   pull_request:
     paths:
-      - 'k8s-setup/**'
+      - 'terraform/**'
     branches: [ master ]
   push:
     paths:
-      - 'k8s-setup/**'
+      - 'terraform/**'
     branches: [ master ]
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./k8s-setup
+        working-directory: ./terraform/k8s-setup
 
     steps:
       - name: Checkout
