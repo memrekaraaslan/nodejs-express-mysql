@@ -17,3 +17,15 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
+
+mysql:
+  enabled: true
+  auth:
+    existingSecret: mysql-secret
+    username: staging_user
+    database: staging_db
+  primary:
+    persistence:
+      enabled: true
+      storageClass: gp2
+      size: 1Gi
