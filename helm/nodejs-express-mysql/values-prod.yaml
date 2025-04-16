@@ -17,3 +17,16 @@ resources:
   requests:
     cpu: 200m
     memory: 256Mi
+
+
+mysql:
+  enabled: true
+  auth:
+    existingSecret: mysql-secret
+    username: prod_user
+    database: prod_db
+  primary:
+    persistence:
+      enabled: true
+      storageClass: gp2
+      size: 1Gi
