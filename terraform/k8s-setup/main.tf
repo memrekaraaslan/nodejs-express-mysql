@@ -31,6 +31,12 @@ module "eks" {
   vpc_id          = module.vpc.vpc_id
   subnet_ids      = module.vpc.public_subnets
 
+  cluster_addons = {
+    aws-ebs-csi-driver = {
+      most_recent = true
+    }
+  }
+
   enable_irsa = true
 
   cluster_endpoint_public_access  = true
@@ -57,10 +63,14 @@ module "eks" {
   eks_managed_node_groups = {
     default_node_group = {
       instance_types = ["t3.medium"]
-      desired_size   = 1
-      max_size       = 1
-      min_size       = 1
+      desired_size   = 2
+      max_size       = 3
+      min_size       = 2
       name           = "eks-ng"
+
+      iam_role_additional_policies = {
+        AmazonEBSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+      }
     }
   }
 
@@ -68,6 +78,7 @@ module "eks" {
     Environment = var.environment
   }
 }
+
 
 output "cluster_endpoint" {
   value = module.eks.cluster_endpoint
