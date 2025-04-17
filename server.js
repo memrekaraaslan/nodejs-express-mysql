@@ -1,4 +1,3 @@
-// hey this is just ttest test
 const express = require("express");
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
