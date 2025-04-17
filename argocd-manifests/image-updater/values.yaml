@@ -1,0 +1,17 @@
+configs:
+  secret:
+    create: false
+
+  registries:
+    enabled: true
+    registries:
+      - name: Docker Hub
+        api_url: https://index.docker.io/v1/
+        prefix: docker.io
+        credentials: secret:dockerhub-secret
+        default: true
+
+image:
+  tag: v0.12.0
+
+logLevel: info

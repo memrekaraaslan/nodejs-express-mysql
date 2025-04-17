@@ -1,8 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nodejs-express-prod
+  name: nodejs-express-staging
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: nodejs-express-mysql=docker.io/256606/nodejs-express-mysql
+    argocd-image-updater.argoproj.io/nodejs-express-mysql.update-strategy: newest-build
+    argocd-image-updater.argoproj.io/nodejs-express-mysql.force-update: "true"
 spec:
   project: default
 
@@ -12,11 +16,11 @@ spec:
     path: helm/nodejs-express-mysql
     helm:
       valueFiles:
-        - values-prod.yaml
+        - values-staging.yaml
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: production
+    namespace: staging
 
   syncPolicy:
     automated:
