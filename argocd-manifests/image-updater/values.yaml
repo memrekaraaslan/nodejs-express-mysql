@@ -11,6 +11,17 @@ configs:
         credentials: secret:dockerhub-secret
         default: true
 
+  git:
+    writeGitCredentials: true
+    credentials:
+      - url: https://github.com/memrekaraaslan/nodejs-express-mysql.git
+        usernameSecret:
+          name: git-creds
+          key: username
+        passwordSecret:
+          name: git-creds
+          key: password
+
 image:
   tag: v0.12.0
 
