@@ -1,0 +1,12 @@
+node_modules
+npm-debug.log
+.dockerignore
+Dockerfile
+.git
+.gitignore
+.env
+terraform
+helm
+argocd-manifests
+README.md
+allfileshas.txt

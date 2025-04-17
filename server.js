@@ -23,6 +23,9 @@ app.get("/", (req, res) => {
 
 require("./app/routes/tutorial.routes.js")(app);
 
+// just test
+console.log("Helloo from updated container v2");
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
