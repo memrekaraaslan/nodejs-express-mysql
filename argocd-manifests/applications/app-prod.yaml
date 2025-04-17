@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: nodejs-express-mysql=docker.io/256606/nodejs-express-mysql
-    argocd-image-updater.argoproj.io/nodejs-express-mysql.update-strategy: newest-build
+    argocd-image-updater.argoproj.io/nodejs-express-mysql.update-strategy: semver
 spec:
   project: default
 
