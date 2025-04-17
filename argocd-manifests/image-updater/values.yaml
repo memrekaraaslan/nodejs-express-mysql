@@ -13,6 +13,9 @@ configs:
 
   git:
     writeGitCredentials: true
+    commitUser:
+      name: ArgoCD Image Updater
+      email: updater@argocd.io
     credentials:
       - url: https://github.com/memrekaraaslan/nodejs-express-mysql.git
         usernameSecret:

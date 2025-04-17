@@ -1,3 +1,4 @@
+// hey this is just ttest test
 const express = require("express");
 // const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
@@ -22,9 +23,6 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/tutorial.routes.js")(app);
-
-// just test
-console.log("Helloo from updated container v4");
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
