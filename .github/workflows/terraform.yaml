@@ -55,7 +55,7 @@ jobs:
             -var="github_pat=${{ secrets.GH_PAT }}" \
             -var="github_repo_url=${{ secrets.GH_REPO_URL }}" \
             -var="dockerhub_dockerconfigjson=${{ secrets.DOCKERHUB_DOCKERCONFIGJSON }}"
-            -var="slack_webhook_url=${{ secrets.SLACK_WEBHOOK_URL }}"      
+            -var="slack_webhook_url=\"${{ secrets.SLACK_WEBHOOK_URL }}\""    
         env:
           TF_LOG: DEBUG
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
