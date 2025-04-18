@@ -38,6 +38,11 @@ Implemented using **GitHub Actions**:
   - Uses GitHub Secrets for secure variable injection
 - `bootstrap.yaml`: 
   - Installs ArgoCD, syncs applications, sets up notification system
+- `docker-build-push.yaml`: 
+  - Triggered on changes to the app/ directory
+  - Builds Docker image, tags it dynamically (1.0.<run_number>)
+  - Pushes the image to Docker Hub repository
+
 
 ---
 
@@ -74,6 +79,7 @@ Implemented using **GitHub Actions**:
 |-------------------------------------------|--------------------------------------------------------|
 | `.github/workflows/terraform.yaml`        | CI pipeline for Terraform (fmt, validate, plan, apply) |
 | `.github/workflows/bootstrap.yaml`        | Post-Terraform ArgoCD setup & secrets                  |
+| `.github/workflows/docker-build-push.yaml`| Post-Terraform ArgoCD setup & secrets                  |
 | `terraform/backend/`                      | Remote state backend (S3 & DynamoDB)                   |
 | `terraform/k8s-setup/`                    | VPC, EKS, IAM setup modules                            |
 | `helm/nodejs-express-mysql/`              | Helm chart for Node.js app with HPA support            |
