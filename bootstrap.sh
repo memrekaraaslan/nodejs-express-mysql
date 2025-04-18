@@ -58,6 +58,9 @@ helm upgrade --install argocd argo/argo-cd \
   --create-namespace \
   --set server.service.type=ClusterIP
 
+log "Waiting for ArgoCD server to be ready..."
+kubectl rollout status deployment/argocd-server -n argocd --timeout=60s
+
 log "Installing ArgoCD Image Updater via Helm"
 helm upgrade --install argocd-image-updater argo/argocd-image-updater \
   --namespace argocd \
