@@ -89,13 +89,14 @@ metadata:
     app.kubernetes.io/name: argocd-notifications-cm
 data:
   service.slack: |
-    webhook: \$slack-webhook-url
+    webhook: ${SLACK_WEBHOOK_URL}
 
   trigger.on-sync-succeeded: |
     - description: Application sync succeeded
       send:
         - slack
       when: app.status.operationState.phase == 'Succeeded'
+      template: app-sync-succeeded
 
   template.app-sync-succeeded: |
     message: |
@@ -106,6 +107,7 @@ data:
       send:
         - slack
       when: app.status.operationState.phase in ['Error', 'Failed']
+      template: app-sync-failed
 
   template.app-sync-failed: |
     message: |

@@ -8,6 +8,8 @@ metadata:
     argocd-image-updater.argoproj.io/nodejs-express-mysql.update-strategy: semver
     argocd-image-updater.argoproj.io/nodejs-express-mysql.helm-value: image.tag
     argocd-image-updater.argoproj.io/write-back-method: git
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: "true"
+    notifications.argoproj.io/subscribe.on-sync-failed.slack: "true"
 spec:
   project: default
 
