@@ -23,3 +23,15 @@ resource "aws_secretsmanager_secret_version" "dockerhub" {
     dockerconfigjson = var.dockerhub_dockerconfigjson
   })
 }
+
+resource "aws_secretsmanager_secret" "slack_webhook" {
+  name        = "slack-webhook-url"
+  description = "Slack Webhook URL for ArgoCD notifications"
+}
+
+resource "aws_secretsmanager_secret_version" "slack_webhook_version" {
+  secret_id     = aws_secretsmanager_secret.slack_webhook.id
+  secret_string = jsonencode({
+    url = var.slack_webhook_url
+  })
+}
