@@ -1,4 +1,6 @@
 namespace: production
+
+# Note: replicaCount is ignored when hpa.enabled is true
 replicaCount: 2
 
 image:
