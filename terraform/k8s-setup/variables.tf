@@ -41,7 +41,7 @@ variable "dockerhub_dockerconfigjson" {
   sensitive   = true
 }
 
-variable "slack_bot_token_value" {
+variable "slack_bot_token" {
   description = "Slack Notification Token"
   type        = string
   sensitive   = true
