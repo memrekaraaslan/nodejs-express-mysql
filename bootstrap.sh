@@ -66,7 +66,61 @@ helm upgrade --install argocd-image-updater argo/argocd-image-updater \
   --namespace argocd \
   -f argocd-manifests/image-updater/values.yaml
 
-### 5. DEPLOY ArgoCD APPLICATIONS
+### 5. CONFIGURE SLACK NOTIFICATIONS
+log "Retrieving Slack Webhook from AWS Secrets Manager"
+SLACK_WEBHOOK_URL=$(aws secretsmanager get-secret-value \
+  --secret-id slack-webhook-url \
+  --query 'SecretString' \
+  --output text | jq -r .url)
+
+if [[ -z "$SLACK_WEBHOOK_URL" ]]; then
+  echo "❌ Slack webhook URL could not be retrieved from Secrets Manager."
+  exit 1
+fi
+
+log "Creating ArgoCD notifications ConfigMap"
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-notifications-cm
+data:
+  service.slack: |
+    webhook: \$slack-webhook-url
+
+  trigger.on-sync-succeeded: |
+    - description: Application sync succeeded
+      send:
+        - slack
+      when: app.status.operationState.phase == 'Succeeded'
+
+  template.app-sync-succeeded: |
+    message: |
+      ArgoCD Application {{.app.metadata.name}} synced successfully.
+
+  trigger.on-sync-failed: |
+    - description: Application sync failed
+      send:
+        - slack
+      when: app.status.operationState.phase in ['Error', 'Failed']
+
+  template.app-sync-failed: |
+    message: |
+      ArgoCD Application {{.app.metadata.name}} failed to sync.
+      Status: {{.app.status.operationState.phase}}
+      Message: {{.app.status.operationState.message}}
+EOF
+
+log "Creating ArgoCD notifications Secret"
+kubectl create secret generic argocd-notifications-secret \
+  --namespace argocd \
+  --from-literal=slack-webhook-url="$SLACK_WEBHOOK_URL" \
+  --dry-run=client -o yaml | kubectl apply -f -
+
+### 6. DEPLOY ArgoCD APPLICATIONS
 log "Applying ArgoCD Applications"
 kubectl apply -f argocd-manifests/applications/
 
