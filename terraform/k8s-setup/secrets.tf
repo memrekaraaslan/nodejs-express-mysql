@@ -4,7 +4,7 @@ resource "aws_secretsmanager_secret" "git_creds" {
 }
 
 resource "aws_secretsmanager_secret_version" "git_creds" {
-  secret_id     = aws_secretsmanager_secret.git_creds.id
+  secret_id = aws_secretsmanager_secret.git_creds.id
   secret_string = jsonencode({
     username = var.github_username
     password = var.github_pat
@@ -18,7 +18,7 @@ resource "aws_secretsmanager_secret" "dockerhub" {
 }
 
 resource "aws_secretsmanager_secret_version" "dockerhub" {
-  secret_id     = aws_secretsmanager_secret.dockerhub.id
+  secret_id = aws_secretsmanager_secret.dockerhub.id
   secret_string = jsonencode({
     dockerconfigjson = var.dockerhub_dockerconfigjson
   })
