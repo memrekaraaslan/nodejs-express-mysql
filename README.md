@@ -83,7 +83,7 @@ Implemented using **GitHub Actions**:
 │       └── values-*.yaml            # Dev/Staging/Prod values
 ├── argocd-manifests/
 │   ├── applications/               # ArgoCD Application CRs for each environment
-│   └── image-updater/             # ArgoCD Image Updater Helm values
+│   └── image-updater/              # ArgoCD Image Updater Helm values
 ├── bootstrap.sh                    # ArgoCD setup automation
 └── README.md
 
