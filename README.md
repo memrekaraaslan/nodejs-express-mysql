@@ -72,19 +72,19 @@ Implemented using **GitHub Actions**:
 .
 ├── .github/
 │   └── workflows/
-│       ├── terraform.yaml         # CI pipeline for Terraform (fmt, validate, plan, apply)
-│       └── bootstrap.yaml         # Post-Terraform ArgoCD setup & secrets
+│       ├── terraform.yaml           # CI pipeline for Terraform (fmt, validate, plan, apply)
+│       └── bootstrap.yaml           # Post-Terraform ArgoCD setup & secrets
 ├── terraform/
-│   ├── backend/                   # Remote state backend (S3 & DynamoDB)
-│   └── k8s-setup/                 # VPC, EKS, IAM setup modules
+│   ├── backend/                     # Remote state backend (S3 & DynamoDB)
+│   └── k8s-setup/                   # VPC, EKS, IAM setup modules
 ├── helm/
-│   └── nodejs-express-mysql/     # Helm chart for app with HPA support
+│   └── nodejs-express-mysql/       # Helm chart for app with HPA support
 │       ├── templates/
-│       └── values-*.yaml         # Dev/Staging/Prod values
+│       └── values-*.yaml            # Dev/Staging/Prod values
 ├── argocd-manifests/
-│   ├── applications/             # ArgoCD Application CRs for each environment
-│   └── image-updater/            # ArgoCD Image Updater Helm values
-├── bootstrap.sh                  # ArgoCD setup automation
+│   ├── applications/               # ArgoCD Application CRs for each environment
+│   └── image-updater/             # ArgoCD Image Updater Helm values
+├── bootstrap.sh                    # ArgoCD setup automation
 └── README.md
 
 
