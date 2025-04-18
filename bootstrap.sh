@@ -92,24 +92,28 @@ data:
     webhook: ${SLACK_WEBHOOK_URL}
 
   template.app-sync-succeeded: |
-    slack:
-      attachments:
-        - color: "#36a64f"
-          title: "✅ Sync Succeeded"
-          text: |
-            Application *{{.app.metadata.name}}* synced successfully.
-            - Sync Status: {{.app.status.sync.status}}
-            - Health Status: {{.app.status.health.status}}
+    message: |
+      {
+        "attachments": [
+          {
+            "color": "#36a64f",
+            "title": "✅ Sync Succeeded",
+            "text": "Application *{{.app.metadata.name}}* synced successfully.\nSync Status: {{.app.status.sync.status}}\nHealth Status: {{.app.status.health.status}}"
+          }
+        ]
+      }
 
   template.app-sync-failed: |
-    slack:
-      attachments:
-        - color: "#ff0000"
-          title: "❌ Sync Failed"
-          text: |
-            Application *{{.app.metadata.name}}* failed to sync.
-            - Status: {{.app.status.operationState.phase}}
-            - Message: {{.app.status.operationState.message}}
+    message: |
+      {
+        "attachments": [
+          {
+            "color": "#ff0000",
+            "title": "❌ Sync Failed",
+            "text": "Application *{{.app.metadata.name}}* failed to sync.\nStatus: {{.app.status.operationState.phase}}\nMessage: {{.app.status.operationState.message}}"
+          }
+        ]
+      }
 
   trigger.on-sync-succeeded: |
     - description: Send notification when sync is successful
