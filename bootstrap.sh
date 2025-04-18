@@ -89,7 +89,7 @@ metadata:
     app.kubernetes.io/name: argocd-notifications-cm
 data:
   service.slack: |
-    webhook: $slack-webhook-url
+    webhook: ${SLACK_WEBHOOK_URL}
 
   template.app-sync-succeeded: |
     slack:
