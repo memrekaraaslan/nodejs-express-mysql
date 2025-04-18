@@ -66,7 +66,16 @@ helm upgrade --install argocd-image-updater argo/argocd-image-updater \
   --namespace argocd \
   -f argocd-manifests/image-updater/values.yaml
 
-### 5. CONFIGURE SLACK NOTIFICATIONS
+### 5. INSTALL METRICS SERVER
+log "Installing metrics-server for HPA"
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm repo update
+helm upgrade --install metrics-server metrics-server/metrics-server \
+  -n kube-system \
+  --create-namespace \
+  --set args={--kubelet-insecure-tls}
+
+### 6. CONFIGURE SLACK NOTIFICATIONS
 log "Retrieving Slack Token from AWS Secrets Manager"
 SLACK_BOT_TOKEN=$(aws secretsmanager get-secret-value \
   --secret-id slack-bot-token \
@@ -115,7 +124,7 @@ kubectl create secret generic argocd-notifications-secret \
   --from-literal=slack-bot-token="$SLACK_BOT_TOKEN" \
   --dry-run=client -o yaml | kubectl apply -f -
 
-### 6. DEPLOY ArgoCD APPLICATIONS
+### 7. DEPLOY ArgoCD APPLICATIONS
 log "Applying ArgoCD Applications"
 kubectl apply -f argocd-manifests/applications/
 
