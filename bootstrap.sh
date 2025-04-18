@@ -29,7 +29,7 @@ metadata:
   namespace: argocd
   labels:
     argocd.argoproj.io/secret-type: repository
-stringData:
+data:
   .dockerconfigjson: "$DOCKERHUB_CONFIG_JSON"
 type: kubernetes.io/dockerconfigjson
 EOF
