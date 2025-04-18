@@ -50,7 +50,11 @@ jobs:
             -var="aws_region=${{ secrets.AWS_REGION }}" \
             -var="vpc_name=${{ secrets.VPC_NAME }}" \
             -var="cluster_name=${{ secrets.CLUSTER_NAME }}" \
-            -var="environment=${{ secrets.ENVIRONMENT }}"        
+            -var="environment=${{ secrets.ENVIRONMENT }}" \
+            -var="github_username=${{ secrets.GH_USERNAME }}" \
+            -var="github_pat=${{ secrets.GH_PAT }}" \
+            -var="github_repo_url=${{ secrets.GH_REPO_URL }}" \
+            -var="dockerhub_dockerconfigjson=${{ secrets.DOCKERHUB_DOCKERCONFIGJSON }}"      
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -62,7 +66,11 @@ jobs:
             -var="aws_region=${{ secrets.AWS_REGION }}" \
             -var="vpc_name=${{ secrets.VPC_NAME }}" \
             -var="cluster_name=${{ secrets.CLUSTER_NAME }}" \
-            -var="environment=${{ secrets.ENVIRONMENT }}"
+            -var="environment=${{ secrets.ENVIRONMENT }}" \
+            -var="github_username=${{ secrets.GH_USERNAME }}" \
+            -var="github_pat=${{ secrets.GH_PAT }}" \
+            -var="github_repo_url=${{ secrets.GH_REPO_URL }}" \
+            -var="dockerhub_dockerconfigjson=${{ secrets.DOCKERHUB_DOCKERCONFIGJSON }}"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

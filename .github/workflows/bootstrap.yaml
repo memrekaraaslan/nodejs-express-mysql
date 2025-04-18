@@ -1,0 +1,44 @@
+name: ArgoCD Bootstrap
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bootstrap:
+    name: Run ArgoCD Bootstrap Script
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install kubectl, helm and jq
+        run: |
+          # kubectl
+          curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+          # helm
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+          # jq
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+            --region ${{ secrets.AWS_REGION }} \
+            --name ${{ secrets.CLUSTER_NAME }}
+
+      - name: Run bootstrap.sh
+        run: |
+          chmod +x bootstrap.sh
+          ./bootstrap.sh

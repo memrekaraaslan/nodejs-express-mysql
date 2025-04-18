@@ -17,3 +17,26 @@ variable "environment" {
   description = "Deployment environment (e.g., dev, staging, prod)"
   type        = string
 }
+
+variable "github_username" {
+  description = "GitHub username for ArgoCD Git push"
+  type        = string
+  sensitive   = true
+}
+
+variable "github_pat" {
+  description = "GitHub personal access token for ArgoCD Git push"
+  type        = string
+  sensitive   = true
+}
+
+variable "github_repo_url" {
+  description = "GitHub repository URL"
+  type        = string
+}
+
+variable "dockerhub_dockerconfigjson" {
+  description = "Base64-encoded Docker config JSON for image pull authentication"
+  type        = string
+  sensitive   = true
+}
