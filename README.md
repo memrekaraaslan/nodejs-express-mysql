@@ -29,20 +29,31 @@ Infrastructure is provisioned via Terraform and includes:
 
 ---
 
-## ⚙️ CI/CD Pipelines
+## ⚙️ CI/CD Pipelines (GitHub Actions)
 
-Implemented using **GitHub Actions**:
+### 🟩 Terraform
 
 - `terraform.yaml`: 
-  - Runs `fmt`, `validate`, `plan`, and `apply` with PR flow
-  - Uses GitHub Secrets for secure variable injection
-- `bootstrap.yaml`: 
-  - Installs ArgoCD, syncs applications, sets up notification system
-- `docker-build-push.yaml`: 
-  - Triggered on changes to the app/ directory
-  - Builds Docker image, tags it dynamically (1.0.<run_number>)
-  - Pushes the image to Docker Hub repository
+  - Triggered on Pull Request
+  - Runs `fmt`, `validate`, `plan`
+  - **No apply on PR**  
+  - On merge to `master`, executes `apply` with manual approval (if enabled)
+  - Uses GitHub Secrets for sensitive variables
 
+### 🟨 Application
+
+- `docker-build-push.yaml`:  
+  - Triggered on changes to `app/`, `Dockerfile`, or `package.json`
+  - Builds & tags Docker image as `1.0.<run_number>`
+  - Pushes image to Docker Hub
+  - ArgoCD Image Updater automatically syncs with the latest tag
+
+### 🟦 Pull Request Validator
+
+- `pr-validate.yaml` (example):
+  - Triggered on **pull requests**
+  - Runs basic Node.js checks (e.g., `npm install`, fake lint, fake test)
+  - Ensures safe merges even without actual tests or linters
 
 ---
 
@@ -65,11 +76,11 @@ Implemented using **GitHub Actions**:
 
 ## 🔔 Slack Notifications
 
-- Slack Bot Token stored in AWS Secrets Manager
-- Notifications configured for:
-  - `on-sync-succeeded`
-  - `on-sync-failed`
-- Sent to `#all-cloudopscenter` channel
+- Slack Bot Token securely fetched from **AWS Secrets Manager**
+- ArgoCD sends notifications:
+  - ✅ `on-sync-succeeded`
+  - ❌ `on-sync-failed`
+- Messages posted to `#all-cloudopscenter` channel
 
 ---
 
