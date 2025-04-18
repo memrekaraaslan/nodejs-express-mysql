@@ -68,12 +68,12 @@ helm upgrade --install argocd-image-updater argo/argocd-image-updater \
 
 ### 5. CONFIGURE SLACK NOTIFICATIONS
 log "Retrieving Slack Webhook from AWS Secrets Manager"
-SLACK_WEBHOOK_URL=$(aws secretsmanager get-secret-value \
+SLACK_BOT_TOKEN=$(aws secretsmanager get-secret-value \
   --secret-id slack-webhook-url \
   --query 'SecretString' \
   --output text | jq -r .url)
 
-if [[ -z "$SLACK_WEBHOOK_URL" ]]; then
+if [[ -z "$SLACK_BOT_TOKEN" ]]; then
   echo "❌ Slack webhook URL could not be retrieved from Secrets Manager."
   exit 1
 fi
@@ -92,7 +92,7 @@ data:
   context: |
     argocdUrl: http://argocd.argocd.svc.cluster.local
   service.slack: |
-    webhook: ${SLACK_WEBHOOK_URL}
+    webhook: ${SLACK_BOT_TOKEN}
   trigger.on-sync-succeeded: |
     - when: app.status.operationState.phase == 'Succeeded'
       send: [slack-on-sync-succeeded]
@@ -112,7 +112,7 @@ EOF
 log "Creating ArgoCD notifications Secret"
 kubectl create secret generic argocd-notifications-secret \
   --namespace argocd \
-  --from-literal=slack-webhook-url="$SLACK_WEBHOOK_URL" \
+  --from-literal=slack-webhook-url="$SLACK_BOT_TOKEN" \
   --dry-run=client -o yaml | kubectl apply -f -
 
 ### 6. DEPLOY ArgoCD APPLICATIONS
