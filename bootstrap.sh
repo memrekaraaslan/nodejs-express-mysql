@@ -91,29 +91,25 @@ data:
   service.slack: |
     webhook: ${SLACK_WEBHOOK_URL}
 
+  template.slack: |
+    message: |
+      ArgoCD Application {{.app.metadata.name}} status: {{.app.status.operationState.phase }}
+      Sync: {{.app.status.sync.status }}
+      Health: {{.app.status.health.status }}
+
   trigger.on-sync-succeeded: |
     - description: Application sync succeeded
       send:
         - slack
       when: app.status.operationState.phase == 'Succeeded'
-      template: app-sync-succeeded
-
-  template.app-sync-succeeded: |
-    message: |
-      ArgoCD Application {{.app.metadata.name}} synced successfully.
+      template: slack
 
   trigger.on-sync-failed: |
     - description: Application sync failed
       send:
         - slack
       when: app.status.operationState.phase in ['Error', 'Failed']
-      template: app-sync-failed
-
-  template.app-sync-failed: |
-    message: |
-      ArgoCD Application {{.app.metadata.name}} failed to sync.
-      Status: {{.app.status.operationState.phase}}
-      Message: {{.app.status.operationState.message}}
+      template: slack
 EOF
 
 log "Creating ArgoCD notifications Secret"
