@@ -46,7 +46,7 @@ module "eks" {
 
   access_entries = {
     devops_admin = {
-      principal_arn = "arn:aws:iam::965245647864:user/devops-admin"
+      principal_arn = var.devops_admin_arn
 
       policy_associations = {
         view = {

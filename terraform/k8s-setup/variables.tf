@@ -46,3 +46,8 @@ variable "slack_bot_token" {
   type        = string
   sensitive   = true
 }
+
+variable "devops_admin_arn" {
+  description = "ARN of IAM user to grant EKS access"
+  type        = string
+}
