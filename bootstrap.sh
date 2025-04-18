@@ -71,7 +71,7 @@ log "Retrieving Slack Token from AWS Secrets Manager"
 SLACK_BOT_TOKEN=$(aws secretsmanager get-secret-value \
   --secret-id slack-bot-token \
   --query 'SecretString' \
-  --output text | jq -r .url)
+  --output text | jq -r .token)
 
 if [[ -z "$SLACK_BOT_TOKEN" ]]; then
   echo "❌ Slack Bot Token could not be retrieved from Secrets Manager."
