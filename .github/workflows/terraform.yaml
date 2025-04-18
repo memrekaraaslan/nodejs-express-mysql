@@ -57,7 +57,6 @@ jobs:
             -var="dockerhub_dockerconfigjson=${{ secrets.DOCKERHUB_DOCKERCONFIGJSON }}" \
             -var="slack_bot_token=${{ secrets.SLACK_BOT_TOKEN }}"
         env:
-          TF_LOG: DEBUG
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
