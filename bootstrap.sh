@@ -94,11 +94,11 @@ data:
   service.slack: |
     webhook: ${SLACK_WEBHOOK_URL}
   trigger.on-sync-succeeded: |
-    when: app.status.operationState.phase == 'Succeeded'
-    send: [slack-on-sync-succeeded]
+    - when: app.status.operationState.phase == 'Succeeded'
+      send: [slack-on-sync-succeeded]
   trigger.on-sync-failed: |
-    when: app.status.operationState.phase == 'Failed'
-    send: [slack-on-sync-failed]
+    - when: app.status.operationState.phase == 'Failed'
+      send: [slack-on-sync-failed]
   template.slack-on-sync-succeeded: |
     message: |
       ✅ *{{.app.metadata.name}}* sync succeeded.
