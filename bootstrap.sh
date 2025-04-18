@@ -87,47 +87,26 @@ metadata:
   namespace: argocd
   labels:
     app.kubernetes.io/name: argocd-notifications-cm
+    app.kubernetes.io/part-of: argocd
 data:
+  context: |
+    argocdUrl: http://argocd.argocd.svc.cluster.local
   service.slack: |
     webhook: ${SLACK_WEBHOOK_URL}
-
-  template.app-sync-succeeded: |
-    message: |
-      {
-        "attachments": [
-          {
-            "color": "#36a64f",
-            "title": "✅ Sync Succeeded",
-            "text": "Application *{{.app.metadata.name}}* synced successfully.\nSync Status: {{.app.status.sync.status}}\nHealth Status: {{.app.status.health.status}}"
-          }
-        ]
-      }
-
-  template.app-sync-failed: |
-    message: |
-      {
-        "attachments": [
-          {
-            "color": "#ff0000",
-            "title": "❌ Sync Failed",
-            "text": "Application *{{.app.metadata.name}}* failed to sync.\nStatus: {{.app.status.operationState.phase}}\nMessage: {{.app.status.operationState.message}}"
-          }
-        ]
-      }
-
   trigger.on-sync-succeeded: |
-    - description: Send notification when sync is successful
-      send:
-        - slack
-      when: app.status.operationState.phase == 'Succeeded'
-      template: app-sync-succeeded
-
+    when: app.status.operationState.phase == 'Succeeded'
+    send: [slack-on-sync-succeeded]
   trigger.on-sync-failed: |
-    - description: Send notification when sync fails
-      send:
-        - slack
-      when: app.status.operationState.phase in ['Error', 'Failed']
-      template: app-sync-failed
+    when: app.status.operationState.phase == 'Failed'
+    send: [slack-on-sync-failed]
+  template.slack-on-sync-succeeded: |
+    message: |
+      ✅ *{{.app.metadata.name}}* sync succeeded.
+      🔗 {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
+  template.slack-on-sync-failed: |
+    message: |
+      ❌ *{{.app.metadata.name}}* sync failed.
+      🔗 {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
 EOF
 
 log "Creating ArgoCD notifications Secret"
