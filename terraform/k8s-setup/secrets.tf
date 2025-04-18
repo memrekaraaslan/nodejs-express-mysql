@@ -24,14 +24,14 @@ resource "aws_secretsmanager_secret_version" "dockerhub" {
   })
 }
 
-resource "aws_secretsmanager_secret" "slack_webhook" {
-  name        = "slack-webhook-url"
-  description = "Slack Webhook URL for ArgoCD notifications"
+resource "aws_secretsmanager_secret" "slack_bot_token" {
+  name        = "slack-bot-token"
+  description = "Slack Bot Token for ArgoCD notifications"
 }
 
-resource "aws_secretsmanager_secret_version" "slack_webhook_version" {
-  secret_id = aws_secretsmanager_secret.slack_webhook.id
+resource "aws_secretsmanager_secret_version" "slack_bot_token_version" {
+  secret_id = aws_secretsmanager_secret.slack_bot_token.id
   secret_string = jsonencode({
-    url = var.slack_webhook_url
+    token = var.slack_bot_token
   })
 }

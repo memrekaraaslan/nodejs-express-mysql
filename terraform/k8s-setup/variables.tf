@@ -41,8 +41,8 @@ variable "dockerhub_dockerconfigjson" {
   sensitive   = true
 }
 
-variable "slack_webhook_url" {
-  description = "Slack Incoming Webhook URL"
+variable "slack_bot_token_value" {
+  description = "Slack Notification Token"
   type        = string
   sensitive   = true
 }
