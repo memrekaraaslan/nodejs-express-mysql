@@ -89,27 +89,41 @@ metadata:
     app.kubernetes.io/name: argocd-notifications-cm
 data:
   service.slack: |
-    webhook: ${SLACK_WEBHOOK_URL}
+    webhook: $slack-webhook-url
 
-  template.slack: |
-    message: |
-      ArgoCD Application {{.app.metadata.name}} status: {{.app.status.operationState.phase }}
-      Sync: {{.app.status.sync.status }}
-      Health: {{.app.status.health.status }}
+  template.app-sync-succeeded: |
+    slack:
+      attachments:
+        - color: "#36a64f"
+          title: "✅ Sync Succeeded"
+          text: |
+            Application *{{.app.metadata.name}}* synced successfully.
+            - Sync Status: {{.app.status.sync.status}}
+            - Health Status: {{.app.status.health.status}}
+
+  template.app-sync-failed: |
+    slack:
+      attachments:
+        - color: "#ff0000"
+          title: "❌ Sync Failed"
+          text: |
+            Application *{{.app.metadata.name}}* failed to sync.
+            - Status: {{.app.status.operationState.phase}}
+            - Message: {{.app.status.operationState.message}}
 
   trigger.on-sync-succeeded: |
-    - description: Application sync succeeded
+    - description: Send notification when sync is successful
       send:
         - slack
       when: app.status.operationState.phase == 'Succeeded'
-      template: slack
+      template: app-sync-succeeded
 
   trigger.on-sync-failed: |
-    - description: Application sync failed
+    - description: Send notification when sync fails
       send:
         - slack
       when: app.status.operationState.phase in ['Error', 'Failed']
-      template: slack
+      template: app-sync-failed
 EOF
 
 log "Creating ArgoCD notifications Secret"
