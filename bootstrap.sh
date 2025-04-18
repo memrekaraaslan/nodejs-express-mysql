@@ -101,12 +101,12 @@ data:
       send: [slack-on-sync-failed]
   template.slack-on-sync-succeeded: |
     message: |
-      ✅ *{{.app.metadata.name}}* sync succeeded.
-      🔗 {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
+      *{{.app.metadata.name}}* sync succeeded.
+      {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
   template.slack-on-sync-failed: |
     message: |
-      ❌ *{{.app.metadata.name}}* sync failed.
-      🔗 {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
+      *{{.app.metadata.name}}* sync failed.
+      {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
 EOF
 
 log "Creating ArgoCD notifications Secret"
