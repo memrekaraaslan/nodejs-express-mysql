@@ -30,7 +30,7 @@ resource "aws_secretsmanager_secret" "slack_webhook" {
 }
 
 resource "aws_secretsmanager_secret_version" "slack_webhook_version" {
-  secret_id     = aws_secretsmanager_secret.slack_webhook.id
+  secret_id = aws_secretsmanager_secret.slack_webhook.id
   secret_string = jsonencode({
     url = var.slack_webhook_url
   })
