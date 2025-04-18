@@ -43,3 +43,8 @@ jobs:
         run: |
           chmod +x bootstrap.sh
           ./bootstrap.sh
+        env:
+          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
+          GITHUB_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_REPO_URL: ${{ secrets.GH_REPO_URL }}
+          DOCKERHUB_DOCKERCONFIGJSON: ${{ secrets.DOCKERHUB_DOCKERCONFIGJSON }}
