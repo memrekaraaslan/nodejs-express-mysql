@@ -90,7 +90,8 @@ Infrastructure is provisioned via Terraform and includes:
 |-------------------------------------------|--------------------------------------------------------|
 | `.github/workflows/terraform.yaml`        | CI pipeline for Terraform (fmt, validate, plan, apply) |
 | `.github/workflows/bootstrap.yaml`        | Post-Terraform ArgoCD setup & secrets                  |
-| `.github/workflows/docker-build-push.yaml`| Post-Terraform ArgoCD setup & secrets                  |
+| `.github/workflows/docker-build-push.yaml`| Build & push Docker image on master changes            |
+| `.github/workflows/pr-validate.yaml`      | PR validation (npm install, lint, test placeholders)   |
 | `terraform/backend/`                      | Remote state backend (S3 & DynamoDB)                   |
 | `terraform/k8s-setup/`                    | VPC, EKS, IAM setup modules                            |
 | `helm/nodejs-express-mysql/`              | Helm chart for Node.js app with HPA support            |
