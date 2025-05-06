@@ -4,5 +4,5 @@ helm:
     value: 256606/nodejs-express-mysql
     forcestring: true
   - name: image.tag
-    value: 1.0.10
+    value: 1.0.11
     forcestring: true
