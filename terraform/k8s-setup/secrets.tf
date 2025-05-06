@@ -1,6 +1,10 @@
 resource "aws_secretsmanager_secret" "git_creds" {
   name        = "git-creds"
   description = "GitHub credentials for ArgoCD Image Updater push access"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_secretsmanager_secret_version" "git_creds" {
@@ -15,6 +19,10 @@ resource "aws_secretsmanager_secret_version" "git_creds" {
 resource "aws_secretsmanager_secret" "dockerhub" {
   name        = "dockerhub-credentials"
   description = "Docker Hub credentials for ArgoCD Image Updater"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_secretsmanager_secret_version" "dockerhub" {
@@ -27,6 +35,10 @@ resource "aws_secretsmanager_secret_version" "dockerhub" {
 resource "aws_secretsmanager_secret" "slack_bot_token" {
   name        = "slack-bot-token"
   description = "Slack Bot Token for ArgoCD notifications"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_secretsmanager_secret_version" "slack_bot_token_version" {
