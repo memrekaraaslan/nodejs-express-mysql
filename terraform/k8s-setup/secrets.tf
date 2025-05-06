@@ -1,6 +1,6 @@
 resource "aws_secretsmanager_secret" "git_creds" {
-  name        = "git-creds"
-  description = "GitHub credentials for ArgoCD Image Updater push access"
+  name                    = "git-creds"
+  description             = "GitHub credentials for ArgoCD Image Updater push access"
   recovery_window_in_days = 0
 }
 
@@ -14,8 +14,8 @@ resource "aws_secretsmanager_secret_version" "git_creds" {
 }
 
 resource "aws_secretsmanager_secret" "dockerhub" {
-  name        = "dockerhub-credentials"
-  description = "Docker Hub credentials for ArgoCD Image Updater"
+  name                    = "dockerhub-credentials"
+  description             = "Docker Hub credentials for ArgoCD Image Updater"
   recovery_window_in_days = 0
 }
 
@@ -27,8 +27,8 @@ resource "aws_secretsmanager_secret_version" "dockerhub" {
 }
 
 resource "aws_secretsmanager_secret" "slack_bot_token" {
-  name        = "slack-bot-token"
-  description = "Slack Bot Token for ArgoCD notifications"
+  name                    = "slack-bot-token"
+  description             = "Slack Bot Token for ArgoCD notifications"
   recovery_window_in_days = 0
 }
 
